@@ -1,20 +1,83 @@
-## Demo repository for accessing storage slots in Solidity
+# Demo repository for accessing storage slots in Solidity
 
 Reference docs:
 
 - https://github.com/Cyfrin/foundry-fund-me-f23/blob/main/script/DeployStorageFun.s.sol
 - https://github.com/Cyfrin/foundry-fund-me-f23/blob/main/src/exampleContracts/FunWithStorage.sol
 
-## Run
+## Foundry Inspect
+
+```bash
+forge inspect StorageSlots storageLayout
+```
+
+### Foundry Inspect - Example Output
+
+```text
+...
+  "storage": [
+    {
+      "astId": 40940,
+      "contract": "src/StorageSlots.sol:StorageSlots",
+      "label": "favoriteNumber",
+      "offset": 0,
+      "slot": "0",
+      "type": "t_uint256"
+    },
+    {
+      "astId": 40942,
+      "contract": "src/StorageSlots.sol:StorageSlots",
+      "label": "someBool",
+      "offset": 0,
+      "slot": "1",
+      "type": "t_bool"
+    },
+    {
+      "astId": 40945,
+      "contract": "src/StorageSlots.sol:StorageSlots",
+      "label": "myArray",
+      "offset": 0,
+      "slot": "2",
+      "type": "t_array(t_uint256)dyn_storage"
+    },
+    {
+      "astId": 40949,
+      "contract": "src/StorageSlots.sol:StorageSlots",
+      "label": "myMap",
+      "offset": 0,
+      "slot": "3",
+      "type": "t_mapping(t_uint256,t_bool)"
+    }
+  ],
+...
+```
+
+## Cast Storage Slots
+
+Run Anvil
+
+```bash
+anvil
+```
+
+In a different terminal deploy the script and use `cast storage <CONTRACT_ADDRESS> <STORAGE_SLOT>` to read the storage slot.
+
+```bash
+forge script script/DeployStorageSlots.s.sol --rpc-url http://127.0.0.1:8545 --private-key <ANVIL_PRIVATE_KEY_0> --broadcast
+
+cast storage 0x5FbDB2315678afecb367f032d93F642f64180aa3 2
+```
+
+## Run Script
 
 ```bash
 forge build
 forge script script/DeployStorageSlots.s.sol
 ```
 
-## Example Output
+### Script - Example Output
 
-```
+```text
 == Return ==
 0: contract StorageSlots 0x90193C961A926261B756D1E5bb255e67ff9498A1
 
